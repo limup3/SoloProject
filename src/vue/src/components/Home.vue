@@ -33,7 +33,7 @@
 
                                 </v-row>
                             </v-container>
-
+<!--                        회원가입 모달창-->
                         </v-card-text>
                         <v-card-actions>
                             <v-btn left color="blue darken-1" text @click="dialog_signup = !dialog_signup">Signup</v-btn>
@@ -49,21 +49,25 @@
                             <span class="headline">회원가입</span>
                         </v-card-title>
                         <v-card-text>
+                            <v-form
+                                    persistent
+                                    ref="form"
+                            >
                             <v-container>
                                 <v-row>
                                     <v-col cols="12">
-                                        <v-text-field label="ID" :rules="idRules" required></v-text-field>
+                                        <v-text-field label="ID" v-model="id" :rules="idRules" required></v-text-field>
                                     </v-col>
                                     <v-col cols="12" >
-                                        <v-text-field label="Name" :rules="nameRules" required></v-text-field>
+                                        <v-text-field label="Name" v-model="name" :rules="nameRules" required></v-text-field>
                                     </v-col>
                                     <v-col cols="12">
-                                        <v-text-field label="Password" :rules="passwordRules" type="password" required></v-text-field>
+                                        <v-text-field label="Password" v-model="password" :rules="passwordRules" type="password" required></v-text-field>
                                     </v-col>
 
                                 </v-row>
                             </v-container>
-
+                            </v-form>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
@@ -128,7 +132,7 @@
                 dialog : false,
                 dialog_login : false,
                 dialog_signup : false,
-                // searchword : "",
+                searchWord : "",
                 name : '',
                 id : '',
                 password : '',
@@ -150,21 +154,32 @@
         },
         methods: {
             search() {
-                this.$store.dispatch("search/find", this.searchword)
+                alert(`검색어: ${this.searchWord}`)
+                alert(`검색어2 :`+ this.searchWord)
+                this.$store.dispatch("search/find", this.searchWord)
             },
             // dialog_login() {
             //
             // },
             submit() {
                 if (!this.$refs.form.validate()) return;
-                alert(`id: ${this.id}, name: ${this.username}, password: ${this.password}`);
+                alert(`id: ${this.id}, name: ${this.name}, password: ${this.password}`);
+                let params = new URLSearchParams()
+                alert('초기값: '+params)
+                params.append('total', 'total')
+                params.append('id', this.id)
+                params.append('name', this.name)
+                params.append('password', this.password)
+                alert("값확인: "+ this.id)
+                this.$store.dispatch('member/signup',params)
                 this.reset();
+
             },
             reset() {
                 // form 리셋
                 this.$refs.form.reset();
                 // dialog 비활성화
-                this.show = false;
+                this.dialog_signup = false;
             },
             login() {
               // router.push('/Login')

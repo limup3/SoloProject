@@ -1,0 +1,29 @@
+package com.example.web.memberEntity;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@CrossOrigin(origins="*", allowedHeaders = "*")
+@RestController
+public class MemberController {
+    @Autowired Member member;
+    @Autowired MemberRepository memberRepository;
+
+    @PostMapping("/signup")
+    public void signup(@RequestBody String total, String id, String name, String password) {
+        System.out.println("들어옴");
+        System.out.println("total : "+total);
+        System.out.println("id : "+id);
+        System.out.println("name : "+name);
+        System.out.println("password : "+password);
+        member.setId(id);
+        member.setName(name);
+        member.setPassword(password);
+        memberRepository.save(member);
+
+
+    }
+}
