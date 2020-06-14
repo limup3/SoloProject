@@ -22,6 +22,7 @@ const actions ={
                 break
             case '축구': router.push("/Soccer")
                 break
+            case '언어': router.push("/Pl")
         }
 
 

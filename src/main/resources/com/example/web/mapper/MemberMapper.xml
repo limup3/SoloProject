@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.web.mapper.MemberMapper">
+    <insert
+        id="insertMember"
+        parameterType="com.example.web.memberEntity.MemberDTO">
+        insert into member (id, nickname, password)
+        values (#{id},#{nickname},#{password})
+
+
+    </insert>
+</mapper>

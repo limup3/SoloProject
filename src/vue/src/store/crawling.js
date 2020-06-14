@@ -2,8 +2,9 @@ import axios from 'axios'
 import router from "@/router"
 
 const state = {
-    context: "http://localhost:4000/",
+    context: "http://localhost:5000/",
     bugsmusic: [],
+    pl:[],
     count: 0
 }
 
@@ -20,6 +21,18 @@ const actions = {
                     .then(({data}) => {
                         commit("SEARCH",data)
                         router.push('/Music')
+                    })
+                    .catch(() => {
+                        alert('통신실패!')
+                    })
+                break
+            case '언어' :
+                axios
+                    .get(state.context+`pl/${searchWord}`)
+                    .then(({data})=>{
+                        alert('액션넘어옴')
+                        commit("PL",data)
+                        router.push("/PL")
                     })
                     .catch(() => {
                         alert('통신실패!')
@@ -43,12 +56,29 @@ const mutations = {
             });
         });
     },
+    PL(state,data) {
+        alert("뮤데이션에서 결과 수 : " + data.count);
+        state.pl = [];
+        state.count = data.count;
+        data.list.forEach((item => {
+            state.pl.push({
+                thisyear: item.thisyear,
+                lastyear: item.lastyear,
+                changess: item.changess,
+                pl: item.pl,
+                rating: item.rating,
+                changerating: item.changerating
+
+            })
+        }))
+    }
 
 };
 
 const getters = {
     bugsmusic: state => state.bugsmusic,
     count: state => state.count,
+    pl : state => state.pl
 };
 
 export default {

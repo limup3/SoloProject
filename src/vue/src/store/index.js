@@ -10,6 +10,7 @@ export const store =  new Vuex.Store({
   modules : {
     crawling,
     search,
-    member
+    member,
+
   }
 })

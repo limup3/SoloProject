@@ -35,8 +35,28 @@
 </template>
 
 <script>
+    import { mapState } from "vuex";
     export default {
-        name: "Music"
+        data () {
+            return {
+                pageNumber: 0,
+                existPrev : true,
+                existNext : true,
+                pages: [1,2,3,4,5],
+                list: [],
+                pager: {},
+                totalCount: '',
+            }
+        },
+        computed: {
+            ...mapState({
+
+                count: state => state.crawling.count,
+                pl: state => state.crawling.pl
+
+            })
+        }
+
     }
 </script>
 
