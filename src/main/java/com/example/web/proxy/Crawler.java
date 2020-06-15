@@ -32,11 +32,18 @@ public class Crawler extends Proxy {
             Elements ratings = d.select("table#top20>tbody>tr>td:nth-child(5)");
             Elements changeratings = d.select("table#top20>tbody>tr>td:nth-child(6)");
             Language language = null;
+            System.out.println("changes값:"+changes);
+
             for(int i =0 ; i< thisyear.size(); i++){
                 language = new Language();
                 language.setThisyear(thisyear.get(i).text());
                 language.setLastyear(lastyear.get(i).text());
-                language.setChangess("https://www.tiobe.com/"+changes.get(i).select("img").attr("src"));
+                if(changes.get(i).select("img").attr("src") == ""){
+                    language.setChangess(changes.get(i).select("img").attr("src"));
+                }else
+                {
+                    language.setChangess("https://www.tiobe.com"+changes.get(i).select("img").attr("src"));
+                }
                 language.setPl(pl.get(i).text());
                 language.setRating(ratings.get(i).text());
                 language.setChangerating(changeratings.get(i).text());

@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h3>사랑받는 프로그래밍 언어 순위</h3>
+        <h3 id="center">사랑받는 프로그래밍 언어 순위 TOP 20</h3>
+        <div id="size"></div>
         <v-simple-table>
             <template v-slot:default>
                 <thead>
@@ -63,5 +64,11 @@
 </script>
 
 <style scoped>
-
+    #size {
+        width: 150px;
+        height: 40px;
+    }
+    #center {
+        text-align: center;
+    }
 </style>

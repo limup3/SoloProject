@@ -33,4 +33,12 @@ public class MemberController {
 
 
     }
+    @PostMapping("/login")
+    public void login(@RequestBody String total, String id, String name, String password) {
+        System.out.println("들어옴");
+        System.out.println("total : "+total);
+        System.out.println("id : "+id);
+        System.out.println("name : "+name);
+        System.out.println("password : "+password);
+    }
 }

@@ -38,7 +38,7 @@
                         <v-card-actions>
                             <v-btn left color="blue darken-1" text @click="dialog_signup = !dialog_signup">Signup</v-btn>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="dialog_login = false">Login</v-btn>
+                            <v-btn color="blue darken-1" text @click="login">Login</v-btn>
                             <v-btn right color="blue darken-1" text @click="dialog_login = false">Close</v-btn>
 
                         </v-card-actions>
@@ -180,7 +180,12 @@
                 this.dialog_signup = false;
             },
             login() {
-              // router.push('/Login')
+                let user = new URLSearchParams()
+                user.append('total', 'total')
+                user.append('id', this.id)
+                user.append('password', this.password)
+                alert('로그인')
+              this.$store.dispatch('member/login',user)
             }
         }
     }
