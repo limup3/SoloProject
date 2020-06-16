@@ -6,6 +6,7 @@ const state = {
     member: [],
     fail : false,
     auth : false,
+    close : false,
     count: 0
 }
 
@@ -19,9 +20,9 @@ const actions = {
           "Content-Type": "application/json"
       })
           .then(({data}) => {
-              alert('액션')
+
               commit("SIGN",data)
-              alert("데이터 : "+data.data)
+              alert("회원가입성공")
           })
           .catch(() => {
               alert('통신실패')
@@ -37,11 +38,11 @@ const actions = {
         })
             .then(({data}) => {
                 if(data.result){
-                    alert('액션 1')
+                    alert('로그인 성공')
                     commit('LOGIN_COMMIT', data)
                 }
                 else{
-                    alert('액션 2')
+                    alert('로그인 실패')
                     commit('FAIL_COMMIT')
                 }
             })
@@ -51,15 +52,18 @@ const actions = {
             })
     },
     async logout({commit}){
+        alert('로그아웃')
         commit('LOGOUT_COMMIT')}
 }
 
 const mutations = {
     LOGIN_COMMIT(state, data){
         state.auth = true
+        state.close = true
+        state.result = data.result
         state.member = data.member
         localStorage.setItem('token', data.token)
-        localStorage.setItem('playerId',data.member.id)
+        localStorage.setItem('id',data.member.id)
 
     },
     FAIL_COMMIT(state){

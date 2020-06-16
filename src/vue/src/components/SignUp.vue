@@ -1,31 +1,38 @@
 <template>
     <v-container>
+        <!--                        회원가입 모달창-->
         <v-card v-if="checktwo">
             <v-card-title primary-title class="justify-center">
-                <span class="headline">로그인</span>
+                <span class="headline">회원가입</span>
             </v-card-title>
             <v-card-text>
-                <v-container>
-                    <v-row>
-                        <v-col cols="12">
-                            <v-text-field label="ID" v-model="id" required ></v-text-field>
-                        </v-col>
-                        <!--                                    <v-col cols="12" >-->
-                        <!--                                        <v-text-field label="Name" required></v-text-field>-->
-                        <!--                                    </v-col>-->
-                        <v-col cols="12">
-                            <v-text-field label="Password" v-model="password" type="password" required></v-text-field>
-                        </v-col>
+                <v-form
+                        persistent
+                        ref="form"
+                >
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-text-field label="ID" v-model="id" :rules="idRules"
+                                              required></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field label="Name" v-model="name" :rules="nameRules"
+                                              required></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field label="Password" v-model="password" :rules="passwordRules"
+                                              type="password" required></v-text-field>
+                            </v-col>
 
-                    </v-row>
-                </v-container>
-
+                        </v-row>
+                    </v-container>
+                </v-form>
             </v-card-text>
             <v-card-actions>
-                <v-btn left color="blue darken-1" text @click="signup">Signup</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="login">Login</v-btn>
-                <v-btn right color="blue darken-1" text @click="dialog_login = false">Close</v-btn>
+                <v-btn color="blue darken-1" text @click="submit">Save</v-btn>
+                <v-btn right color="blue darken-1" text @click="dialog_signup = false">Close</v-btn>
 
             </v-card-actions>
         </v-card>
@@ -34,10 +41,12 @@
 
 <script>
     export default {
+        name: "SignUp",
         data() {
             return {
                 dialog_login: false,
-                checktwo: true,
+                dialog_signup : false,
+                checktwo: false,
                 searchWord : "",
                 name : '',
                 id : '',
@@ -59,15 +68,9 @@
             }
         },
         methods: {
-            login() {
-                let user = new URLSearchParams()
-                user.append('total', 'total')
-                user.append('id', this.id)
-                user.append('password', this.password)
-                // alert(Boolean(this.result))
-                this.$store.dispatch('member/login', user)
-                this.login_reset();
-            },
+            // dialog_login() {
+            //
+            // },
             submit() {
                 if (!this.$refs.form.validate()) return;
                 let params = new URLSearchParams()
@@ -86,8 +89,7 @@
                 this.dialog_signup = false;
             },
             signup(){
-
-                (this.checktwo != false)? this.checktwo = false:this.checktwo = true
+                // (this.checktwo != false)? this.checktwo = true:this.checktwo = false
             }
         }
     }
