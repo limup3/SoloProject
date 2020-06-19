@@ -45,10 +45,14 @@ public class MemberController {
 //        System.out.println("password : "+password);
         Map<String,Object> map = new HashMap<>();
         try {
+            System.out.println("아이디"+memberRepository.findById(id).getId());
+            System.out.println("비밀번호"+ memberRepository.findById(id).getPassword());
+            System.out.println("멤버"+ memberRepository.findById(id));
 //            System.out.println("id값 : "+memberRepository.findById(id).getId());
 //            System.out.println("passwd값 : "+memberRepository.findByPassword(password).getPassword());
             if(memberRepository.findById(id).getId() != null &&
-                    memberRepository.findByPassword(password).getPassword() != null){
+                    password.equals(memberRepository.findById(id).getPassword())){
+
                 System.out.println("로그인 성공");
                 map.put("result", true);
                 member = memberRepository.findById(id);
@@ -56,7 +60,9 @@ public class MemberController {
                 map.put("member",member);
             }
         }catch(Exception e){
+
             System.out.println("로그인 실패");
+//            e.printStackTrace();
             map.put("result", false);
         }
 
